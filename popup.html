@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speed</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="content-container">
+    <!-- Верхняя строка: вкладка с видео (переключение экранов колесиком мыши) -->
+    <div class="top-nav-row">
+      <div class="active-tab-row">
+        <span class="active-tab-label" id="tabLabel">Ускоряется:</span>
+        <button type="button" class="tab-jump-btn" id="tabJumpBtn" disabled>
+          <span class="tab-title-text" id="tabJumpTitle">Поиск...</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Область переключения экранов -->
+    <div class="screens-viewport">
+      <div class="screens-track" id="screensTrack">
+        
+        <!-- ЭКРАН 1: СКОРОСТЬ (SPEED) -->
+        <div class="screen-pane" id="speedPane">
+          <!-- Числитель скорости по центру -->
+          <div class="speed-display-row">
+            <div class="badge" id="speedDisplay">
+              <span class="badge-text">1.00x</span>
+            </div>
+          </div>
+
+          <!-- Ползунок скорости от 1.0x до 5.0x -->
+          <div class="slider-section">
+            <input type="range" id="speedSlider" min="1.0" max="5.0" step="0.05" value="1.0">
+          </div>
+
+          <!-- Блок кнопок-пресетов -->
+          <div class="presets-section">
+            <div class="presets-grid">
+              <button type="button" class="preset-btn" data-speed="1.0">1.0x</button>
+              <button type="button" class="preset-btn" data-speed="1.25">1.25x</button>
+              <button type="button" class="preset-btn" data-speed="1.5">1.5x</button>
+              <button type="button" class="preset-btn" data-speed="1.75">1.75x</button>
+              <button type="button" class="preset-btn" data-speed="2.0">2.0x</button>
+              <button type="button" class="preset-btn" data-speed="3.0">3.0x</button>
+              <button type="button" class="preset-btn" data-speed="4.0">4.0x</button>
+              <button type="button" class="preset-btn" data-speed="5.0">5.0x</button>
+            </div>
+          </div>
+
+          <!-- Статистика времени: сэкономленное время + реальное оставшееся время -->
+          <div class="time-stats-row" id="timeStatsRow">
+            <div class="stat-item" id="timeSavedBlock">
+              <svg class="leaf-icon" viewBox="0 0 24 24" width="13" height="13" fill="#30d158">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" stroke="#141416" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="time-saved-text" id="timeSavedVal">0с</span>
+            </div>
+
+            <span class="stat-divider" id="statDivider" style="display: none;">•</span>
+
+            <div class="stat-item" id="timeRemainingBlock" style="display: none;">
+              <svg class="clock-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span class="time-saved-text" id="timeRemainingVal">0с</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ЭКРАН 2: ЗВУК -->
+        <div class="screen-pane" id="soundPane">
+          <!-- Карточка Усиления -->
+          <div class="control-group">
+            <span class="control-name">Усиление</span>
+            <input type="range" id="gainSlider" min="1.0" max="5.0" step="0.05" value="1.0">
+            <span class="control-val-badge" id="gainDisplay">1.0x</span>
+          </div>
+
+          <!-- Карточка Баланса -->
+          <div class="control-group">
+            <span class="control-name">Баланс</span>
+            <input type="range" id="panSlider" min="-1.0" max="1.0" step="0.05" value="0.0">
+            <span class="control-val-badge" id="panDisplay">0</span>
+          </div>
+
+          <!-- Переключатели Моно и Инверсия Л/П -->
+          <div class="sound-toggles-row">
+            <button type="button" class="toggle-pill-btn" id="monoBtn">
+              <span>Моно</span>
+            </button>
+            <button type="button" class="toggle-pill-btn" id="flipBtn">
+              <span>Инверсия Л/П</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+:root {
+  --bg-color: #141416;
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.55);
+  --text-sub: rgba(255, 255, 255, 0.35);
+
+  --glass-subpanel: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.12);
+
+  --btn-glass: rgba(255, 255, 255, 0.08);
+  --btn-glass-hover: rgba(255, 255, 255, 0.16);
+  --btn-glass-border: rgba(255, 255, 255, 0.12);
+
+  --active-bg: #ffffff;
+  --active-text: #000000;
+
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ios-slide: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  width: 304px;
+  padding: 10px 10px 12px 10px;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Верхняя строка с кнопкой вкладки */
+.top-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+}
+
+.active-tab-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--glass-subpanel);
+  border: 1px solid var(--glass-border);
+  border-radius: 9999px;
+  padding: 4px 6px 4px 10px;
+  max-width: 210px;
+  width: auto;
+  min-width: 0;
+}
+
+.active-tab-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab-jump-btn {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+  max-width: 130px;
+  text-align: left;
+  transition: all 0.2s var(--spring-bounce);
+}
+
+.tab-jump-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.tab-jump-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.tab-jump-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  background: transparent;
+  border-color: transparent;
+}
+
+.tab-title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  font-weight: 500;
+}
+
+
+/* Viewport и вертикальный слайдер экранов снизу */
+.screens-viewport {
+  width: 100%;
+  height: 196px;
+  overflow: hidden;
+  position: relative;
+  padding: 1px 0;
+}
+
+.screens-track {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 200%;
+  transition: transform 0.35s var(--ios-slide);
+}
+
+.screens-track.show-sound {
+  transform: translateY(-50%);
+}
+
+.screen-pane {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 2px 4px 4px 4px;
+  box-sizing: border-box;
+}
+
+/* ЭКРАН 1: СКОРОСТЬ */
+.speed-display-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1px 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 24px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.22s var(--spring-bounce), background 0.2s ease;
+}
+
+.badge:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.badge-text {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", monospace;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+.slider-section {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 2px;
+}
+
+/* Общие стили для ползунков */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.14);
+  outline: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.2s var(--spring-bounce);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.2s var(--spring-bounce);
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+  transform: scale(1.1);
+}
+
+/* Пресеты */
+.presets-section {
+  display: flex;
+  flex-direction: column;
+  padding: 1px 0;
+}
+
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.preset-btn {
+  background: var(--btn-glass);
+  color: var(--text-main);
+  border: 1px solid var(--btn-glass-border);
+  border-radius: 9999px;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.18s var(--spring-bounce);
+}
+
+.preset-btn:hover {
+  background: var(--btn-glass-hover);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1.5px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+
+.preset-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* Активный пресет */
+.preset-btn.active {
+  background: var(--active-bg);
+  color: var(--active-text);
+  font-weight: 700;
+  border-color: #ffffff;
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Статистика времени: сэкономлено + осталось */
+.time-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 2px 0;
+  margin-top: 1px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-divider {
+  color: var(--text-sub);
+  font-size: 11px;
+  user-select: none;
+}
+
+.leaf-icon {
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 4px rgba(48, 209, 88, 0.45));
+}
+
+.clock-icon {
+  color: #0a84ff;
+  stroke: #0a84ff;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 4px rgba(10, 132, 255, 0.45));
+}
+
+.time-saved-text {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* ЭКРАН 2: ЗВУК (СКОМПОНОВАННЫЙ БЕЗ ПУСТОТ) */
+#soundPane {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1px 2px 2px 2px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: transparent;
+  border: none;
+  padding: 1px 2px;
+}
+
+.control-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: 0.3px;
+  margin-bottom: 11px;
+}
+
+.control-val-badge {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 2px 14px;
+  border-radius: 9999px;
+  min-width: 46px;
+  text-align: center;
+  margin-top: 11px;
+}
+
+/* Компактный размер ползунка во второй вкладке */
+#soundPane input[type="range"] {
+  width: 90%;
+  height: 6px;
+}
+
+#soundPane input[type="range"]::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+}
+
+#soundPane input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+}
+
+/* Переключатели Mono и Flip L/R (без точек) */
+.sound-toggles-row {
+  display: flex;
+  gap: 7px;
+  padding: 0;
+}
+
+.toggle-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  background: var(--btn-glass);
+  color: var(--text-muted);
+  border: 1px solid var(--btn-glass-border);
+  border-radius: 9999px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s var(--spring-bounce);
+}
+
+.toggle-pill-btn:hover {
+  background: var(--btn-glass-hover);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.toggle-pill-btn:active {
+  transform: scale(0.96);
+}
+
+.toggle-pill-btn.active {
+  background: var(--active-bg);
+  color: var(--active-text);
+  border-color: #ffffff;
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
